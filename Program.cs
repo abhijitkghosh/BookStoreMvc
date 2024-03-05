@@ -1,7 +1,18 @@
+using BookStoreMvc.Models.Domain;
+using BookStoreMvc.Repositories.Abstract;
+using BookStoreMvc.Repositories.Implementation;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
+
+builder.Services.AddScoped<IGenreService,GenreService>();   
 
 var app = builder.Build();
 
